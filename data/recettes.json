@@ -1,0 +1,158 @@
+{
+  "France": [
+    {
+      "nom": "Omelette au fromage",
+      "image": "omelette_fromage.jpg",
+      "ingredients": [
+        "4 œufs",
+        "60 g de gruyère râpé",
+        "10 g de beurre",
+        "sel",
+        "poivre"
+      ],
+      "instructions": [
+        "Casser les œufs dans un saladier.",
+        "Ajouter le sel et le poivre puis battre le mélange.",
+        "Faire fondre le beurre dans une poêle chaude.",
+        "Verser les œufs battus dans la poêle.",
+        "Ajouter le fromage râpé avant de plier l’omelette.",
+        "Servir chaud avec une salade."
+      ],
+      "preparation_min": 5,
+      "cuisson_min": 5,
+      "calories_kcal": 320,
+      "proteines_g": 18,
+      "difficulte": "Très facile"
+    },
+
+    {
+      "nom": "Quiche lorraine",
+      "image": "quiche_lorraine.jpg",
+      "ingredients": [
+        "1 pâte brisée",
+        "100 g de lardons",
+        "2 œufs",
+        "20 cl de crème fraîche",
+        "sel",
+        "poivre"
+      ],
+      "instructions": [
+        "Préchauffer le four à 180 degrés.",
+        "Étaler la pâte dans un moule à tarte.",
+        "Faire revenir les lardons dans une poêle.",
+        "Mélanger les œufs avec la crème fraîche.",
+        "Ajouter les lardons puis verser le mélange sur la pâte.",
+        "Cuire au four pendant environ 35 minutes."
+      ],
+      "preparation_min": 15,
+      "cuisson_min": 35,
+      "calories_kcal": 550,
+      "proteines_g": 22,
+      "difficulte": "Facile"
+    }
+  ],
+
+  "Italie": [
+    {
+      "nom": "Spaghetti carbonara",
+      "image": "spaghetti_carbonara.jpg",
+      "ingredients": [
+        "250 g de spaghetti",
+        "2 œufs",
+        "100 g de lardons",
+        "50 g de parmesan",
+        "poivre"
+      ],
+      "instructions": [
+        "Faire cuire les spaghetti dans une grande casserole d’eau bouillante.",
+        "Faire revenir les lardons dans une poêle sans ajouter de matière grasse.",
+        "Battre les œufs avec le parmesan dans un bol.",
+        "Égoutter les pâtes puis les remettre dans la casserole.",
+        "Ajouter les lardons puis le mélange œufs-parmesan.",
+        "Mélanger rapidement et servir avec du poivre."
+      ],
+      "preparation_min": 10,
+      "cuisson_min": 15,
+      "calories_kcal": 550,
+      "proteines_g": 25,
+      "difficulte": "Facile"
+    },
+
+    {
+      "nom": "Pizza margherita",
+      "image": "pizza_margherita.jpg",
+      "ingredients": [
+        "1 pâte à pizza",
+        "200 g de sauce tomate",
+        "150 g de mozzarella",
+        "basilic"
+      ],
+      "instructions": [
+        "Préchauffer le four à 220 degrés.",
+        "Étaler la pâte sur une plaque de cuisson.",
+        "Répartir la sauce tomate sur toute la pâte.",
+        "Ajouter les morceaux de mozzarella.",
+        "Cuire la pizza pendant environ 15 minutes.",
+        "Ajouter le basilic frais avant de servir."
+      ],
+      "preparation_min": 15,
+      "cuisson_min": 15,
+      "calories_kcal": 600,
+      "proteines_g": 22,
+      "difficulte": "Facile"
+    }
+  ],
+
+  "Maghreb": [
+    {
+      "nom": "Couscous poulet",
+      "image": "couscous_poulet.jpg",
+      "ingredients": [
+        "2 cuisses de poulet",
+        "300 g de semoule",
+        "courgettes",
+        "carottes",
+        "épices couscous"
+      ],
+      "instructions": [
+        "Faire revenir le poulet dans une marmite avec les épices.",
+        "Ajouter les légumes coupés en morceaux.",
+        "Verser de l’eau puis laisser cuire à feu moyen.",
+        "Préparer la semoule avec de l’eau chaude.",
+        "Servir la semoule avec les légumes et le poulet.",
+        "Ajouter du bouillon avant de déguster."
+      ],
+      "preparation_min": 20,
+      "cuisson_min": 45,
+      "calories_kcal": 600,
+      "proteines_g": 35,
+      "difficulte": "Moyen"
+    }
+  ],
+
+  "Asie": [
+    {
+      "nom": "Riz sauté",
+      "image": "riz_saute.jpg",
+      "ingredients": [
+        "250 g de riz",
+        "1 œuf",
+        "légumes mélangés",
+        "sauce soja"
+      ],
+      "instructions": [
+        "Faire cuire le riz puis le laisser refroidir.",
+        "Faire revenir les légumes dans un wok.",
+        "Ajouter l’œuf battu et mélanger rapidement.",
+        "Incorporer le riz dans le wok.",
+        "Ajouter la sauce soja puis faire sauter quelques minutes.",
+        "Servir chaud."
+      ],
+      "preparation_min": 10,
+      "cuisson_min": 10,
+      "calories_kcal": 400,
+      "proteines_g": 12,
+      "difficulte": "Très facile"
+    }
+  ]
+}

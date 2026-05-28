@@ -26,7 +26,14 @@ Ce CSV contient des utilisateurs avec mots de passe déjà **hachés** (compatib
 2. Onglet **Importer**
 3. Sélectionner le fichier `data/users_seed.csv`
 4. Format : **CSV**
-5. Lancer l’import
+5. Délimiteur de colonnes : `;`
+6. Lancer l’import
+
+### Si phpMyAdmin affiche encore une erreur de colonnes
+
+- Vérifier que l’import se fait bien dans la table `users`
+- Vérifier que le séparateur est `;`
+- Vérifier que les anciennes données de test ont été supprimées avant l’import si besoin
 
 ## Base de données SQL
 

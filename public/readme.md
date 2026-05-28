@@ -51,7 +51,7 @@ Il contient :
 ## Comptes de démonstration (après import CSV)
 
 - Admin :
-  - `username` : `admin`
+  - `username` : `adminadmin`
   - `password` : `Admin1234`
 
 - Utilisateur 1 :

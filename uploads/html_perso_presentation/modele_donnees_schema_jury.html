@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schéma du modèle de données - Cuisine du Monde (Jury)</title>
+    <style>
+      :root {
+        --bg: #eef4f9;
+        --paper: #ffffff;
+        --ink: #182635;
+        --muted: #5c6c7d;
+        --primary: #1f5f85;
+        --secondary: #4d97c7;
+        --accent: #ffb347;
+        --soft: #f6fbff;
+        --line: #d8e5ef;
+        --shadow: 0 14px 40px rgba(24, 38, 53, 0.1);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(180deg, #eaf2f8 0%, #f9fbfe 100%);
+        color: var(--ink);
+        font-family:
+          Segoe UI,
+          Arial,
+          sans-serif;
+      }
+      .sheet {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 28px 22px 36px;
+      }
+      .cover {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: #fff;
+        border-radius: 28px;
+        padding: 30px 34px;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .cover::after {
+        content: "";
+        position: absolute;
+        right: -70px;
+        top: -70px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .cover::before {
+        content: "";
+        position: absolute;
+        right: 90px;
+        bottom: -90px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .eyebrow {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        letter-spacing: 0.4px;
+        margin-bottom: 16px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 38px;
+        line-height: 1.08;
+      }
+      .subtitle {
+        margin: 14px 0 0;
+        font-size: 17px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.94);
+        max-width: 980px;
+      }
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .meta {
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(4px);
+        border-radius: 999px;
+        padding: 8px 13px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 16px;
+        margin: 16px 0;
+      }
+      .card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .card h2 {
+        margin: 0 0 12px;
+        color: var(--primary);
+        font-size: 23px;
+      }
+      .card p,
+      .card li {
+        color: var(--muted);
+        line-height: 1.68;
+      }
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .tag {
+        background: #eef7fd;
+        border: 1px solid #d8eaf7;
+        color: #24597d;
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .schema-box {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        padding: 18px 18px 20px;
+        margin-top: 16px;
+      }
+      .schema-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .schema-title h2 {
+        margin: 0;
+        font-size: 24px;
+        color: var(--primary);
+      }
+      .schema-title .hint {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .mcd {
+        display: grid;
+        grid-template-columns: 1fr 140px 1fr;
+        gap: 14px;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .entity {
+        min-height: 300px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+        border: 2px solid #cfe0ed;
+        border-radius: 22px;
+        padding: 18px 18px 14px;
+        position: relative;
+      }
+      .entity::before {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border-radius: 16px;
+        border: 1px dashed #ddeaf4;
+        pointer-events: none;
+      }
+      .entity-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .entity h3 {
+        margin: 0;
+        font-size: 22px;
+        color: #214e67;
+        letter-spacing: 0.4px;
+      }
+      .pill {
+        font-size: 12px;
+        font-weight: 800;
+        background: #edf6fb;
+        color: #225777;
+        border: 1px solid #d4e5f2;
+        border-radius: 999px;
+        padding: 6px 10px;
+      }
+      .entity ul {
+        margin: 0;
+        padding-left: 18px;
+        position: relative;
+        z-index: 1;
+      }
+      .entity li {
+        margin-bottom: 7px;
+        font-size: 14px;
+      }
+      .pk {
+        font-weight: 800;
+        color: #b64040;
+      }
+      .fk {
+        font-weight: 800;
+        color: #8b6d00;
+      }
+      .rel {
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .rel .line {
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        top: 50%;
+        border-top: 4px solid #8cb3cb;
+      }
+      .rel .arrow {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 22px;
+        color: #8cb3cb;
+        background: var(--paper);
+        padding: 0 8px;
+        font-weight: 900;
+      }
+      .rel .card-rel {
+        background: linear-gradient(180deg, #fefefe 0%, #f4f9fd 100%);
+        border: 2px solid #9cc0d6;
+        border-radius: 999px;
+        padding: 14px 18px;
+        z-index: 1;
+        text-align: center;
+        font-weight: 800;
+        color: #214e67;
+        box-shadow: 0 10px 24px rgba(31, 45, 61, 0.07);
+      }
+      .rel .card-rel small {
+        display: block;
+        font-weight: 700;
+        color: #58758a;
+        margin-top: 4px;
+      }
+      .three-cols {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 16px;
+      }
+      .mini-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 18px 20px;
+      }
+      .mini-card h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+        color: var(--primary);
+      }
+      .mini-card p,
+      .mini-card li {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 11px 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #ecf5fb;
+        color: #234a62;
+      }
+      .note {
+        margin-top: 16px;
+        background: #f5fbff;
+        border-left: 6px solid var(--accent);
+        border-radius: 16px;
+        padding: 15px 16px;
+        color: #345469;
+      }
+      .signature {
+        margin-top: 18px;
+        font-size: 13px;
+        color: #6a7c8d;
+        text-align: right;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .print-tip {
+        margin-top: 14px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      @media (max-width: 960px) {
+        .grid-2,
+        .three-cols,
+        .mcd {
+          grid-template-columns: 1fr;
+        }
+        .rel {
+          height: 120px;
+        }
+        .rel .line {
+          display: none;
+        }
+        .rel .arrow {
+          display: none;
+        }
+        .entity {
+          min-height: auto;
+        }
+        h1 {
+          font-size: 30px;
+        }
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        .sheet {
+          max-width: none;
+          padding: 0;
+        }
+        .cover,
+        .card,
+        .schema-box,
+        .mini-card,
+        table {
+          box-shadow: none;
+        }
+        .schema-box,
+        .card,
+        .mini-card,
+        .entity {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="sheet">
+      <section class="cover">
+        <span class="eyebrow">Projet ADB • Analyse des données</span>
+        <h1>Schéma du modèle de données<br />— Cuisine du Monde</h1>
+        <p class="subtitle">
+          Document visuel de présentation du modèle de données, prêt pour le
+          dossier et pour l’oral. Il montre le MCD, le MLD et le MPD du projet,
+          avec une lecture simple et claire pour le jury.
+        </p>
+        <div class="meta-row">
+          <span class="meta">Base : MySQL</span>
+          <span class="meta">Architecture : MVC</span>
+          <span class="meta">Sécurité : mots de passe hashés</span>
+          <span class="meta">Tables principales : users / recipes</span>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="card">
+          <h2>1) Lecture métier</h2>
+          <p>Le site de recettes repose sur deux grands objets de données :</p>
+          <ul>
+            <li>
+              <strong>Utilisateur</strong> : compte de connexion, rôle et
+              identifiants.
+            </li>
+            <li>
+              <strong>Recette</strong> : contenu affiché sur le site, avec image
+              et informations nutritionnelles.
+            </li>
+          </ul>
+          <p>
+            Le schéma ci-dessous sert à expliquer comment ces informations sont
+            organisées dans la base.
+          </p>
+          <div class="tag-row">
+            <span class="tag">Analyse</span>
+            <span class="tag">Conception</span>
+            <span class="tag">Base de données</span>
+            <span class="tag">Modèle conceptuel</span>
+          </div>
+        </div>
+        <div class="card">
+          <h2>2) Ce que tu peux dire à l’oral</h2>
+          <p class="muted">
+            "J’ai analysé le besoin du projet puis j’ai identifié deux entités
+            principales. Le modèle de données permet de gérer les comptes
+            utilisateurs et les recettes. Chaque table contient des champs
+            adaptés au fonctionnement du site et à la sécurité."
+          </p>
+          <ul>
+            <li>Un compte utilisateur peut être simple ou administrateur</li>
+            <li>Les mots de passe sont stockés en hash</li>
+            <li>
+              Les recettes contiennent le titre, la description, l’image et les
+              infos de préparation
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="schema-box">
+        <div class="schema-title">
+          <h2>3) MCD — Modèle conceptuel des données</h2>
+          <span class="hint"
+            >Vision métier : relation utilisateur → recettes</span
+          >
+        </div>
+
+        <div class="mcd">
+          <article class="entity">
+            <div class="entity-head">
+              <h3>UTILISATEUR</h3>
+              <span class="pill">Entité 1</span>
+            </div>
+            <ul>
+              <li><span class="pk">#id_user</span></li>
+              <li>nom</li>
+              <li>prenom</li>
+              <li>username</li>
+              <li>password</li>
+              <li>role</li>
+              <li>created_at</li>
+            </ul>
+          </article>
+
+          <div class="rel" aria-hidden="true">
+            <div class="line"></div>
+            <div class="arrow">⟷</div>
+            <div class="card-rel">1,N<small>crée / gère</small></div>
+          </div>
+
+          <article class="entity">
+            <div class="entity-head">
+              <h3>RECETTE</h3>
+              <span class="pill">Entité 2</span>
+            </div>
+            <ul>
+              <li><span class="pk">#id</span></li>
+              <li>title</li>
+              <li>description</li>
+              <li>image</li>
+              <li>preparation_min</li>
+              <li>cuisson_min</li>
+              <li>calories_kcal</li>
+              <li>proteines_g</li>
+              <li>difficulte</li>
+              <li>categorie</li>
+              <li>created_at</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Point important :</strong> dans le schéma métier idéal, un
+          utilisateur peut créer plusieurs recettes. Dans l’implémentation
+          actuelle, la base fonctionne déjà pour les comptes et les recettes, et
+          la relation peut être ajoutée plus tard avec une clé étrangère
+          <code>user_id</code> si on veut relier chaque recette à son auteur.
+        </div>
+      </section>
+
+      <section class="three-cols">
+        <div class="mini-card">
+          <h3>4) MLD</h3>
+          <p>Le modèle logique reprend les tables réelles de la base :</p>
+          <ul>
+            <li><strong>users</strong></li>
+            <li><strong>recipes</strong></li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>5) MPD</h3>
+          <p>
+            Le modèle physique correspond à la structure SQL utilisée dans le
+            projet :
+          </p>
+          <ul>
+            <li>MySQL / InnoDB</li>
+            <li>PDO côté PHP</li>
+            <li>champs typés et clés primaires</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>6) Sécurité</h3>
+          <p>Le modèle prend en compte :</p>
+          <ul>
+            <li>username unique</li>
+            <li>mot de passe haché</li>
+            <li>rôles user / admin</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="schema-box">
+        <div class="schema-title">
+          <h2>7) Structure relationnelle simplifiée</h2>
+          <span class="hint">À mettre dans le dossier comme schéma clair</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Table</th>
+              <th>Clé primaire</th>
+              <th>Champs principaux</th>
+              <th>Rôle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>users</strong></td>
+              <td>id_user</td>
+              <td>nom, prenom, username, password, role, created_at</td>
+              <td>Gérer les comptes et les droits d’accès</td>
+            </tr>
+            <tr>
+              <td><strong>recipes</strong></td>
+              <td>id</td>
+              <td>
+                title, description, image, preparation_min, cuisson_min,
+                calories_kcal, proteines_g, difficulte, categorie, created_at
+              </td>
+              <td>Stocker et afficher les recettes du site</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <strong>Phrase courte pour le jury :</strong> le modèle de données est
+          composé de deux tables principales, une pour les utilisateurs et une
+          pour les recettes, ce qui permet de gérer la connexion, les rôles et
+          le contenu du site de façon structurée.
+        </div>
+      </section>
+
+      <p class="print-tip">
+        Astuce : ouvre ce fichier dans Edge puis fais
+        <strong>Imprimer → Enregistrer en PDF</strong> si tu veux refaire le PDF
+        toi-même. Je peux aussi te créer une variante encore plus “rapport
+        officiel” si besoin.
+      </p>
+
+      <div class="signature">Cuisine du Monde • Analyse des données</div>
+    </main>
+  </body>
+</html>

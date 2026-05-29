@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schéma du modèle de données - Cuisine du Monde</title>
+    <style>
+      :root {
+        --bg: #f3f7fb;
+        --card: #ffffff;
+        --ink: #1e2d3d;
+        --muted: #5f6f81;
+        --primary: #2b5d7a;
+        --accent: #4b8fb8;
+        --soft: #e9f3fb;
+        --line: #d9e4ee;
+        --shadow: 0 12px 28px rgba(31, 45, 61, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Segoe UI,
+          Arial,
+          sans-serif;
+        color: var(--ink);
+        background: linear-gradient(180deg, #eef4f9 0%, #f9fbfe 100%);
+      }
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 20px 40px;
+      }
+      .hero {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: #fff;
+        border-radius: 20px;
+        padding: 28px 30px;
+        box-shadow: var(--shadow);
+        margin-bottom: 18px;
+      }
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: 34px;
+      }
+      .hero p {
+        margin: 0;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.95);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        padding: 18px 20px;
+      }
+      .card h2 {
+        margin: 0 0 12px;
+        color: var(--primary);
+        font-size: 22px;
+      }
+      .card p,
+      .card li {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .diagram-wrap {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        padding: 18px;
+        margin: 16px 0;
+      }
+      .diagram-wrap h2 {
+        margin: 0 0 14px;
+        color: var(--primary);
+        font-size: 22px;
+      }
+      .diagram {
+        display: grid;
+        grid-template-columns: 1fr 120px 1fr;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .entity {
+        border: 2px solid #c7d9e8;
+        border-radius: 16px;
+        padding: 18px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+        min-height: 240px;
+      }
+      .entity h3 {
+        margin: 0 0 10px;
+        color: #234b64;
+        font-size: 20px;
+      }
+      .entity .pk {
+        font-weight: 700;
+        color: #b03d3d;
+      }
+      .entity ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      .entity li {
+        margin-bottom: 7px;
+      }
+      .relation {
+        position: relative;
+        height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2f536d;
+        font-weight: 700;
+      }
+      .relation::before {
+        content: "";
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        top: 50%;
+        border-top: 3px solid #91b2ca;
+      }
+      .relation .label {
+        background: #fff;
+        border: 2px solid #91b2ca;
+        border-radius: 999px;
+        padding: 10px 14px;
+        z-index: 1;
+        text-align: center;
+        line-height: 1.25;
+      }
+      .section-title {
+        margin: 0 0 12px;
+        color: var(--primary);
+        font-size: 22px;
+      }
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .badge {
+        background: var(--soft);
+        border: 1px solid #d7e7f5;
+        color: #275a7e;
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 11px 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #edf5fb;
+        color: #234b64;
+      }
+      .note {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-left: 5px solid var(--accent);
+        background: #f2f8fd;
+        border-radius: 12px;
+        color: #395468;
+      }
+      .two-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 16px;
+      }
+      .mini {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      @media print {
+        body {
+          background: #fff;
+        }
+        .page {
+          padding: 0;
+          max-width: none;
+        }
+        .hero,
+        .card,
+        .diagram-wrap,
+        table {
+          box-shadow: none;
+        }
+        .entity,
+        .diagram-wrap {
+          break-inside: avoid;
+        }
+      }
+      @media (max-width: 900px) {
+        .grid,
+        .two-cols,
+        .diagram {
+          grid-template-columns: 1fr;
+        }
+        .relation {
+          height: auto;
+          padding: 18px 0;
+        }
+        .relation::before {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <h1>Schéma du modèle de données</h1>
+        <p>
+          Projet ADB — <strong>Cuisine du Monde</strong><br />Document visuel
+          prêt à imprimer en PDF pour présenter l’analyse des données, le MCD,
+          le MLD et le MPD.
+        </p>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <h2>Analyse rapide</h2>
+          <p>Le projet repose sur deux entités principales :</p>
+          <ul>
+            <li>
+              <strong>users</strong> : comptes utilisateurs et administrateurs
+            </li>
+            <li><strong>recipes</strong> : recettes du site</li>
+          </ul>
+          <div class="badge-row">
+            <span class="badge">PHP</span>
+            <span class="badge">MySQL</span>
+            <span class="badge">PDO</span>
+            <span class="badge">MVC</span>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Idée métier</h2>
+          <p>
+            Un utilisateur s’inscrit, se connecte et peut consulter les
+            recettes. L’administrateur gère le contenu et les comptes. Le modèle
+            de données doit donc permettre :
+          </p>
+          <ul>
+            <li>la gestion des identifiants et rôles</li>
+            <li>le stockage sécurisé des mots de passe</li>
+            <li>le stockage des informations de recettes</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="diagram-wrap">
+        <h2>1. Schéma conceptuel des données (MCD)</h2>
+        <p class="mini">
+          Version pédagogique à présenter à l’oral :
+          <strong>un utilisateur peut créer plusieurs recettes</strong>.
+        </p>
+        <div class="diagram">
+          <div class="entity">
+            <h3>UTILISATEUR</h3>
+            <ul>
+              <li><span class="pk">#id_user</span></li>
+              <li>nom</li>
+              <li>prenom</li>
+              <li>username</li>
+              <li>password</li>
+              <li>role</li>
+              <li>created_at</li>
+            </ul>
+          </div>
+          <div class="relation">
+            <div class="label">1, N<br />crée / gère</div>
+          </div>
+          <div class="entity">
+            <h3>RECETTE</h3>
+            <ul>
+              <li><span class="pk">#id</span></li>
+              <li>title</li>
+              <li>description</li>
+              <li>image</li>
+              <li>preparation_min</li>
+              <li>cuisson_min</li>
+              <li>calories_kcal</li>
+              <li>proteines_g</li>
+              <li>difficulte</li>
+              <li>categorie</li>
+              <li>created_at</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note">
+          <strong>Remarque pour le jury :</strong> dans l’implémentation
+          actuelle, la table <code>recipes</code> ne contient pas de clé
+          étrangère <code>user_id</code>. Le schéma ci-dessus montre le besoin
+          métier attendu ; tu peux dire que c’est une amélioration possible si
+          on veut relier chaque recette à son auteur.
+        </div>
+      </section>
+
+      <section class="two-cols">
+        <div class="card">
+          <h2>2. Modèle logique (MLD)</h2>
+          <p>Tables présentes dans la base :</p>
+          <ul>
+            <li>
+              <strong>users</strong>(id_user, nom, prenom, username, password,
+              role, created_at)
+            </li>
+            <li>
+              <strong>recipes</strong>(id, title, description, image,
+              preparation_min, cuisson_min, calories_kcal, proteines_g,
+              difficulte, categorie, created_at)
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>3. Modèle physique (MPD)</h2>
+          <p>Structure SQL réellement utilisée dans le projet :</p>
+          <ul>
+            <li>base de données <code>projet_recettes</code></li>
+            <li>type de base : <strong>MySQL</strong></li>
+            <li>connexion via <strong>PDO</strong></li>
+            <li>mots de passe hashés avec <code>password_hash()</code></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="diagram-wrap">
+        <h2>4. Schéma relationnel simplifié</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Table</th>
+              <th>Clé primaire</th>
+              <th>Champs principaux</th>
+              <th>Rôle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>users</strong></td>
+              <td>id_user</td>
+              <td>nom, prenom, username, password, role, created_at</td>
+              <td>Stocke les comptes visiteurs, utilisateurs et admin</td>
+            </tr>
+            <tr>
+              <td><strong>recipes</strong></td>
+              <td>id</td>
+              <td>
+                title, description, image, preparation_min, cuisson_min,
+                calories_kcal, proteines_g, difficulte, categorie, created_at
+              </td>
+              <td>Stocke les recettes affichées sur le site</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note">
+          <strong>Phrase simple à dire à l’oral :</strong> le modèle de données
+          est construit autour de deux tables, une pour les utilisateurs et une
+          pour les recettes, avec des champs adaptés à l’authentification et à
+          l’affichage du contenu.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>5. Conclusion à présenter</h2>
+        <p>
+          Cette analyse permet de comprendre comment les données sont organisées
+          dans l’application. Le schéma montre les entités principales, leurs
+          attributs, et la logique métier du site. C’est la base qui permet
+          ensuite d’implémenter le CRUD, la connexion et la gestion des rôles.
+        </p>
+      </section>
+    </div>
+  </body>
+</html>

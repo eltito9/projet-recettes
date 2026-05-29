@@ -1560,3 +1560,11 @@ button:hover{
     color:var(--color-white) !important;
     background:var(--color-primary-hover);
 }
+.form-group textarea{
+
+    width:100%;
+
+    min-height:140px;
+
+    resize:vertical;
+}

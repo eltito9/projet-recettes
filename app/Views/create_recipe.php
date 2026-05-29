@@ -35,7 +35,7 @@
 
     <div class="form-group">
         <label>Description / instructions</label>
-        <textarea name="description"></textarea>
+        <textarea  name="description"></textarea>
     </div>
 
     <div class="form-group">

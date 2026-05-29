@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Structure du projet - Cuisine du Monde</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --ink:#1f2d3d;
+      --muted:#5f6f81;
+      --primary:#2b5d7a;
+      --accent:#3f8cc2;
+      --line:#d9e3ee;
+      --shadow:0 10px 30px rgba(31,45,61,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Segoe UI, Arial, sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#eef4f9 0%, #f9fbfe 100%);
+    }
+    .page{
+      max-width:1200px;
+      margin:0 auto;
+      padding:32px 20px 48px;
+    }
+    .hero{
+      background:linear-gradient(135deg, var(--primary), var(--accent));
+      color:#fff;
+      border-radius:20px;
+      padding:28px 30px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+    }
+    .hero h1{margin:0 0 10px;font-size:34px}
+    .hero p{margin:0;color:rgba(255,255,255,.92);font-size:16px;line-height:1.5}
+    .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-bottom:18px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:20px 22px;
+    }
+    .card h2{margin:0 0 12px;font-size:22px;color:var(--primary)}
+    .card p,.card li{color:var(--muted);line-height:1.6}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .tag{
+      background:#eef6fc;
+      border:1px solid #d7e8f7;
+      color:#1f5f88;
+      border-radius:999px;
+      padding:7px 12px;
+      font-size:13px;
+      font-weight:600;
+    }
+    .schema{
+      background:#fbfdff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin:18px 0;
+    }
+    .schema h2{margin:0 0 14px;font-size:22px;color:var(--primary)}
+    .flow{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      align-items:stretch;
+    }
+    .node{
+      position:relative;
+      background:linear-gradient(180deg,#ffffff 0%, #f7fbff 100%);
+      border:2px solid #cfe0ee;
+      border-radius:16px;
+      padding:16px 14px;
+      min-height:150px;
+    }
+    .node::after{
+      content:"→";
+      position:absolute;
+      right:-18px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#7a94aa;
+      font-size:22px;
+      font-weight:700;
+    }
+    .node:last-child::after{content:""}
+    .node h3{margin:0 0 10px;font-size:18px;color:#214e67}
+    .node ul{margin:0;padding-left:18px}
+    .node li{margin-bottom:6px;font-size:14px}
+    .route-list{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+    .route-group{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      background:#fff;
+    }
+    .route-group h3{margin:0 0 10px;color:#214e67}
+    .route-group ul{margin:0;padding-left:18px}
+    .route-group li{margin-bottom:7px;color:var(--muted)}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:12px 10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{background:#edf5fb;color:#214e67}
+    .footer-note{
+      margin-top:18px;
+      padding:14px 16px;
+      border-left:5px solid var(--accent);
+      background:#f2f8fd;
+      color:#395468;
+      border-radius:12px;
+    }
+    .small{font-size:13px;color:var(--muted)}
+    @media print{
+      body{background:#fff}
+      .page{padding:0;max-width:none}
+      .hero,.card,.schema,table,.route-group,.node{box-shadow:none}
+      .hero{border-radius:0}
+      .node::after{display:none}
+      .grid-2,.flow,.route-list{grid-template-columns:repeat(2,1fr)}
+      a{color:inherit;text-decoration:none}
+    }
+    @media (max-width: 900px){
+      .grid-2,.flow,.route-list{grid-template-columns:1fr}
+      .node::after{display:none}
+      .hero h1{font-size:28px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <h1>Structure du projet — Cuisine du Monde</h1>
+      <p>Document de présentation visuelle pour expliquer clairement toutes les pages du site, la logique MVC et l’organisation générale du projet.</p>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>1. Vue d’ensemble</h2>
+        <p>Le projet est organisé en <strong>front-office</strong> pour les visiteurs et utilisateurs, et en <strong>back-office</strong> pour l’administrateur. L’accès aux pages dépend du rôle connecté.</p>
+        <div class="tags">
+          <span class="tag">PHP</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">MVC</span>
+          <span class="tag">HTML / CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2>2. Rôle des dossiers</h2>
+        <ul>
+          <li><strong>app/controllers</strong> : logique des pages</li>
+          <li><strong>app/models</strong> : requêtes base de données</li>
+          <li><strong>app/Views</strong> : affichage HTML/PHP</li>
+          <li><strong>config</strong> : connexion base de données</li>
+          <li><strong>public</strong> : point d’entrée du site</li>
+          <li><strong>data</strong> : données CSV / fichiers sources</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="schema">
+      <h2>3. Schéma général des pages</h2>
+      <div class="flow">
+        <div class="node">
+          <h3>Accueil public</h3>
+          <ul>
+            <li>Accueil</li>
+            <li>Contact</li>
+            <li>Catégories</li>
+            <li>Connexion</li>
+            <li>Inscription</li>
+          </ul>
+        </div>
+        <div class="node">
+          <h3>Espace utilisateur</h3>
+          <ul>
+            <li>Liste des recettes</li>
+            <li>Détail recette</li>
+            <li>Déconnexion</li>
+          </ul>
+        </div>
+        <div class="node">
+          <h3>Espace administrateur</h3>
+          <ul>
+            <li>Gestion des recettes</li>
+            <li>Créer / modifier / supprimer</li>
+            <li>Gestion des utilisateurs</li>
+          </ul>
+        </div>
+        <div class="node">
+          <h3>Support commun</h3>
+          <ul>
+            <li>Navbar</li>
+            <li>Footer</li>
+            <li>CSS</li>
+            <li>Session PHP</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4. Toutes les pages du projet</h2>
+      <div class="route-list">
+        <div class="route-group">
+          <h3>Pages publiques</h3>
+          <ul>
+            <li><strong>home.php</strong> : page d’accueil</li>
+            <li><strong>login.php</strong> : connexion</li>
+            <li><strong>register.php</strong> : inscription</li>
+            <li><strong>forgot_password.php</strong> : mot de passe oublié</li>
+            <li><strong>contact.php</strong> : page contact / contenu visuel</li>
+            <li><strong>categories.php</strong> : choix des continents</li>
+          </ul>
+        </div>
+        <div class="route-group">
+          <h3>Pages utilisateurs</h3>
+          <ul>
+            <li><strong>recettes.php</strong> : liste des recettes</li>
+            <li><strong>recipe_detail.php</strong> : détail d’une recette</li>
+            <li><strong>category_recipes.php</strong> : recettes filtrées par catégorie</li>
+          </ul>
+        </div>
+        <div class="route-group">
+          <h3>Pages administrateur</h3>
+          <ul>
+            <li><strong>create_recipe.php</strong> : ajouter une recette</li>
+            <li><strong>edit_recipe.php</strong> : modifier une recette</li>
+            <li><strong>users.php</strong> : liste des utilisateurs</li>
+            <li><strong>create_user.php</strong> : ajouter un utilisateur</li>
+            <li><strong>edit_user.php</strong> : modifier un utilisateur</li>
+          </ul>
+        </div>
+        <div class="route-group">
+          <h3>Parties communes</h3>
+          <ul>
+            <li><strong>navbar.php</strong> : menu du site</li>
+            <li><strong>footer.php</strong> : pied de page</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="schema">
+      <h2>5. Flux de fonctionnement MVC</h2>
+      <div class="flow">
+        <div class="node">
+          <h3>1. Navigateur</h3>
+          <ul>
+            <li>L’utilisateur clique sur une page</li>
+            <li>Exemple : `index.php?page=recettes`</li>
+          </ul>
+        </div>
+        <div class="node">
+          <h3>2. Controller</h3>
+          <ul>
+            <li>Le contrôleur reçoit la demande</li>
+            <li>Il décide quelle vue afficher</li>
+          </ul>
+        </div>
+        <div class="node">
+          <h3>3. Model</h3>
+          <ul>
+            <li>Le modèle récupère ou modifie les données</li>
+            <li>Connexion à MySQL</li>
+          </ul>
+        </div>
+        <div class="node">
+          <h3>4. View</h3>
+          <ul>
+            <li>La vue affiche la page HTML</li>
+            <li>Retour au navigateur</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6. Résumé rapide des sécurités</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Élément</th>
+            <th>But</th>
+            <th>Implémentation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Connexion</td>
+            <td>Accéder au site selon le rôle</td>
+            <td>Session PHP</td>
+          </tr>
+          <tr>
+            <td>Mot de passe</td>
+            <td>Ne pas stocker en clair</td>
+            <td><code>password_hash()</code></td>
+          </tr>
+          <tr>
+            <td>Admin</td>
+            <td>Protéger le back-office</td>
+            <td>Vérification du rôle</td>
+          </tr>
+          <tr>
+            <td>Base de données</td>
+            <td>Stockage des recettes et comptes</td>
+            <td>MySQL / PDO</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="footer-note">
+      <strong>Conseil :</strong> ouvre ce fichier dans le navigateur, puis utilise <em>Imprimer → Enregistrer au format PDF</em> pour obtenir ton PDF final.
+      <div class="small">Si tu veux, je peux aussi te faire une version encore plus jolie avec couleurs, icônes et une page de garde plus “jury”.</div>
+    </div>
+  </div>
+</body>
+</html>

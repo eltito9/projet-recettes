@@ -1428,3 +1428,135 @@ button:hover{
 
     border-radius:12px;
 }
+/* ==================================================
+   CARTES RECETTES - CORRECTIONS LISIBILITÉ
+================================================== */
+
+.recipe-card{
+    background:var(--color-white);
+
+    display:flex;
+    flex-direction:column;
+
+    height:100%;
+
+    border-radius:8px;
+    overflow:hidden;
+
+    box-shadow:0 2px 12px rgba(0,0,0,0.05);
+
+    transition:var(--transition);
+}
+
+.recipe-card:hover{
+    transform:translateY(-5px);
+}
+
+.recipe-card img{
+    width:100%;
+    height:260px;
+
+    object-fit:cover;
+}
+
+.recipe-card-content{
+    padding:22px;
+
+    display:flex;
+    flex-direction:column;
+
+    flex:1;
+}
+
+.recipe-tag{
+    color:var(--color-primary);
+
+    font-size:11px;
+    font-weight:900;
+
+    text-transform:uppercase;
+    letter-spacing:1px;
+
+    margin-bottom:10px;
+}
+
+.recipe-card h2{
+    font-size:20px;
+    font-weight:900;
+
+    line-height:1.25;
+
+    color:var(--color-black);
+
+    margin-bottom:12px;
+
+    min-height:50px;
+}
+
+.recipe-card p{
+    font-size:14px;
+
+    line-height:1.7;
+
+    color:var(--color-text-light);
+
+    margin-bottom:18px;
+}
+
+.recipe-meta{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:22px;
+}
+
+.recipe-meta span{
+    background:#F5F5F5;
+
+    padding:8px 12px;
+
+    border-radius:30px;
+
+    font-size:12px;
+    font-weight:700;
+
+    color:var(--color-text-light);
+}
+
+/* Actions toujours alignées en bas */
+.recipe-actions{
+    margin-top:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+/* Bouton voir recette toujours uniforme */
+.recipe-actions .home-btn{
+    min-width:145px;
+
+    text-align:center;
+
+    color:var(--color-white) !important;
+    background:var(--color-primary);
+
+    padding:12px 18px;
+
+    border-radius:4px;
+
+    font-size:13px;
+    font-weight:800;
+
+    text-decoration:none;
+}
+
+.recipe-actions .home-btn:hover{
+    color:var(--color-white) !important;
+    background:var(--color-primary-hover);
+}

@@ -31,72 +31,43 @@ $page = $_GET['page'] ?? 'login';
 
 // Navigation simple par paramètre GET
 // Chaque cas correspond à une fonctionnalité du site.
-if($page === 'login')
-{
+if ($page === 'login') {
     $authController->login();
-}
-elseif($page === 'register')
-{
+} elseif ($page === 'register') {
     $authController->register();
-}
-elseif($page === 'home')
-{
+} elseif ($page === 'home') {
     $controller = new HomeController();
     $controller->index();
-}
-elseif($page === 'categories')
-{
+} elseif ($page === 'categories') {
     $controller = new HomeController();
     $controller->categories();
-}
-elseif($page === 'logout')
-{
+} elseif ($page === 'logout') {
     $authController->logout();
-}
-elseif($page === 'recipe-detail')
-{
+} elseif ($page === 'recipe-detail') {
     $recipeController->show();
-}
-elseif($page === 'recettes')
-{
+} elseif ($page === 'recettes') {
     $recipeController->index();
-}
-elseif($page === 'create-recipe')
-{
+} elseif ($page === 'create-recipe') {
     $recipeController->create();
-}
-elseif($page === 'forgot-password')
-{
+} elseif ($page === 'forgot-password') {
     $authController->forgotPassword();
-}
-elseif($page === 'delete-recipe')
-{
+} elseif ($page === 'delete-recipe') {
     $recipeController->delete();
-}
-elseif($page === 'edit-recipe')
-{
+} elseif ($page === 'edit-recipe') {
     $recipeController->edit();
-}
-elseif($page === 'users')
-{
+} elseif ($page === 'users') {
     $userController->index();
-}
-elseif($page === 'create-user')
-{
+} elseif ($page === 'create-user') {
     $userController->create();
-}
-elseif($page === 'edit-user')
-{
+} elseif ($page === 'edit-user') {
     $userController->edit();
-}
-elseif($page === 'delete-user')
-{
+} elseif ($page === 'delete-user') {
     $userController->delete();
-}
-elseif($page === 'category')
-{
+} elseif ($page === 'category') {
     $recipeController->category();
-}elseif($page === 'contact')
-{
+} elseif ($page === 'contact') {
     require __DIR__ . '/../app/Views/contact.php';
+} else {
+    http_response_code(404);
+    require __DIR__ . '/../app/Views/404.php';
 }

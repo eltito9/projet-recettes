@@ -8,24 +8,35 @@ require_once __DIR__ . '/../models/Recipe.php';
    ╚════════════════════════════════════════════╝ */
 class RecipeController
 {
-   public function show()
-{
-    // La fiche détail n’est accessible qu’aux utilisateurs connectés.
-    if(!isset($_SESSION['user']))
+    private function renderNotFound(): void
     {
-        header('Location: index.php?page=login');
+        http_response_code(404);
+        require __DIR__ . '/../Views/404.php';
         exit;
     }
 
-    // On récupère l’identifiant de la recette dans l’URL.
-    $id = $_GET['id'];
+    public function show()
+    {
+        // La fiche détail n’est accessible qu’aux utilisateurs connectés.
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?page=login');
+            exit;
+        }
 
-    // Le modèle va chercher la recette correspondante en base.
-    $recipe = Recipe::find($id);
+        // On récupère l’identifiant de la recette dans l’URL.
+        $id = $_GET['id'];
 
-    // La vue affiche le détail complet.
-    require __DIR__ . '/../Views/recipe_detail.php';
-}
+        // Le modèle va chercher la recette correspondante en base.
+        $recipe = Recipe::find($id);
+
+        // Si l’identifiant ne correspond à aucune recette, on affiche la 404.
+        if (!$recipe) {
+            $this->renderNotFound();
+        }
+
+        // La vue affiche le détail complet.
+        require __DIR__ . '/../Views/recipe_detail.php';
+    }
 
     public function index()
     {
@@ -39,13 +50,11 @@ class RecipeController
     public function create()
     {
         // Réservé à l’administrateur.
-        if($_SESSION['user']['role'] !== 'admin')
-        {
+        if ($_SESSION['user']['role'] !== 'admin') {
             die('Accès refusé');
         }
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $title = $_POST['title'];
             $description = $_POST['description'];
 
@@ -58,8 +67,7 @@ class RecipeController
 
             $image = null;
 
-            if(isset($_FILES['image']) && $_FILES['image']['error'] === 0)
-            {
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
                 // Le fichier est simplement déplacé dans le dossier uploads.
                 $image = $_FILES['image']['name'];
                 $tmpName = $_FILES['image']['tmp_name'];
@@ -92,13 +100,17 @@ class RecipeController
     public function delete()
     {
         // Suppression réservée à l’administrateur.
-        if($_SESSION['user']['role'] !== 'admin')
-        {
+        if ($_SESSION['user']['role'] !== 'admin') {
             die('Accès refusé');
         }
 
         // Identifiant de la recette à supprimer.
         $id = $_GET['id'];
+
+        // Si la recette n’existe pas, on affiche une 404.
+        if (!Recipe::find($id)) {
+            $this->renderNotFound();
+        }
 
         // Suppression en base.
         Recipe::delete($id);
@@ -110,16 +122,21 @@ class RecipeController
     public function edit()
     {
         // Modification réservée à l’administrateur.
-        if($_SESSION['user']['role'] !== 'admin')
-        {
+        if ($_SESSION['user']['role'] !== 'admin') {
             die('Accès refusé');
         }
 
         // On lit l’identifiant de la recette à modifier.
         $id = $_GET['id'];
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
+        // Si la recette n’existe pas, on affiche une 404 immédiatement.
+        $recipe = Recipe::find($id);
+
+        if (!$recipe) {
+            $this->renderNotFound();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $title = $_POST['title'];
             $description = $_POST['description'];
 
@@ -146,29 +163,30 @@ class RecipeController
             exit;
         }
 
-        // Récupération de la recette actuelle pour pré-remplir le formulaire.
-        $recipe = Recipe::find($id);
-
         require __DIR__ . '/../Views/edit_recipe.php';
     }
 
 
-public function category()
-{
-    // La page catégorie est réservée aux utilisateurs connectés.
-    if(!isset($_SESSION['user']))
+    public function category()
     {
-        header('Location: index.php?page=login');
-        exit;
+        // La page catégorie est réservée aux utilisateurs connectés.
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?page=login');
+            exit;
+        }
+
+        // Nom de la catégorie choisi dans l’URL.
+        $categorie = $_GET['name'];
+
+        // Récupération des recettes liées à cette catégorie.
+        $recipes = Recipe::findByCategory($categorie);
+
+        // Si aucune recette n’est liée à cette catégorie, on renvoie une 404.
+        if (empty($recipes)) {
+            $this->renderNotFound();
+        }
+
+        // Affichage de la page filtrée par catégorie.
+        require __DIR__ . '/../Views/category_recipes.php';
     }
-
-    // Nom de la catégorie choisi dans l’URL.
-    $categorie = $_GET['name'];
-
-    // Récupération des recettes liées à cette catégorie.
-    $recipes = Recipe::findByCategory($categorie);
-
-    // Affichage de la page filtrée par catégorie.
-    require __DIR__ . '/../Views/category_recipes.php';
-}
 }

@@ -549,6 +549,76 @@ button:hover{
     line-height:1.6;
 }
 
+/* ==================================================
+   PAGE 404
+================================================== */
+
+.not-found-page{
+    min-height:calc(100vh - 64px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:60px 20px;
+}
+
+.not-found-card{
+    width:100%;
+    max-width:620px;
+    background:var(--color-white);
+    border-radius:4px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.05);
+    padding:56px 48px;
+    text-align:center;
+}
+
+.not-found-code{
+    display:inline-block;
+    color:var(--color-primary);
+    background:#F8ECE8;
+    font-size:50px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    padding:10px 14px;
+    border-radius:999px;
+    margin-bottom:20px;
+}
+
+.not-found-card h1{
+    font-size:42px;
+    font-weight:900;
+    color:var(--color-black);
+    line-height:1.15;
+    margin-bottom:18px;
+}
+
+.not-found-text{
+    color:var(--color-text-light);
+    font-size:16px;
+    line-height:1.7;
+    max-width:500px;
+    margin:0 auto 30px;
+}
+
+.not-found-actions{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.not-found-link{
+    color:var(--color-primary);
+    font-size:14px;
+    font-weight:800;
+    text-decoration:none;
+}
+
+.not-found-link:hover{
+    color:var(--color-primary-hover);
+}
+
 
 /* ==================================================
    RESPONSIVE AUTH
@@ -570,6 +640,23 @@ button:hover{
 
     .auth-features{
         grid-template-columns:1fr;
+    }
+
+    .not-found-page{
+        padding:35px 16px;
+    }
+
+    .not-found-card{
+        padding:36px 24px;
+    }
+
+    .not-found-card h1{
+        font-size:32px;
+    }
+
+    .not-found-actions{
+        flex-direction:column;
+        gap:12px;
     }
 }
 
